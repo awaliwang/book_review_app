@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book Search App
+{% endblock %}
+
+{% block main %}
+<form action="/" method="POST">
+    <div class="form-group">
+        <label for="searchInput">Search: </label>
+        <input class="form-control" style="display: inline-block; width: 50%;" id="searchInput" name="query" placeholder="Search via title, author, ISBN, or published year" type="text">
+        <button class="btn btn-primary" style="display: inline-block;" type="submit">Search</button>
+    </div>
+</form>
+<table class="table table-bordered table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in books %}
+        <tr>
+            <td>{{ i.isbn }}</td>
+            <td>{{ i.title }}</td>
+            <td>{{ i.author }}</td>
+            <td>{{ i.year }}</td>
+            <td><a href="book/{{ i.isbn }}">Book Page</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

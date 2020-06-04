@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <!-- rest of book info below -->
+    <div style="padding: 1em;">
+        <h1>{{ title }}</h1>
+        <h5>Author: {{ author }}</h5>
+        <h5>ISBN: {{ isbn }}</h5>
+        <h5>Published: {{ year }}</h5>
+    </div>
+
+    <!-- Goodreads: average rating and number of ratings -->
+    <div>
+        <h3>Average rating on Goodreads:</h3>
+        <h5>{{ average_rating }}</h5>
+        <h5>Total ratings: {{ total_ratings }}</h5>
+    </div>
+    <!-- reviews from web app itself -->
+    <div style="padding: 1em;">
+        <h3>Join the conversation, rate and review!</h3>
+        <form action="/book/{{ isbn }}" method="POST">
+            <div class="form-group" style="display: flex; align-items: center;">
+                <select name="rating" required style="height: 1.5em;">
+                    <option value="" disabled selected>Rating</option>
+                    <option value=5>5</option>
+                    <option value=4>4</option>
+                    <option value=3>3</option>
+                    <option value=2>2</option>
+                    <option value=1>1</option>
+                </select>
+                <textarea class="form-control" name="review" type="text" required></textarea>
+                <button class="btn btn-primary" type="submit" style="height: fit-content;">Submit</button>
+            </div>
+        </form>
+        {% if reviews != [] %}
+        <div id="reviews" style="display: flex; justify-content: center;">
+            <ul style="list-style: none; width: 50%;">
+                {% for i in reviews %}
+                <li style="text-align: left;">{{ i.username }} says: {{ i.review }}<br>Rating: {{ i.rating }}<br>Posted on: {{ i.time_posted }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <h3>Leave the first review!</h3>
+        {% endif%}
+    </div>
+    <div>
+        <h3><a href="/">Back to Search</a></h3>
+    </div>
+
+</div>
+{% endblock %}
